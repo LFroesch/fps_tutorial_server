@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwaqdu0mey7gg"]
+
+[ext_resource type="Script" uid="uid://bnmi1tvqyx4fd" path="res://player/local/player_local.gd" id="1_gucd0"]
+[ext_resource type="Script" uid="uid://dygpiuulkydqd" path="res://player/local_weapon_holder.gd" id="2_y8ftr"]
+[ext_resource type="PackedScene" uid="uid://qty0uvl51pci" path="res://ui/hud/hud.tscn" id="3_w115m"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s7k6g"]
+radius = 0.25
+height = 1.6
+
+[node name="PlayerLocal" type="CharacterBody3D" node_paths=PackedStringArray("weapon_holder") groups=["PlayerLocal"]]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_gucd0")
+weapon_holder = NodePath("Head/LocalWeaponHolder")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CapsuleShape3D_s7k6g")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+near = 0.001
+
+[node name="LocalWeaponHolder" type="Node3D" parent="Head"]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0.02, -0.025, -0.025)
+script = ExtResource("2_y8ftr")
+metadata/_custom_type_script = "uid://baehfch82gpaj"
+
+[node name="HUD" parent="." instance=ExtResource("3_w115m")]

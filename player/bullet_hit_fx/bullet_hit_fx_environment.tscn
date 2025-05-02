@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://ouwni1cpuh0c"]
+
+[ext_resource type="Script" uid="uid://ny7rin5y76gl" path="res://player/bullet_hit_fx/bullet_hit_fx.gd" id="1_gxgwd"]
+[ext_resource type="Texture2D" uid="uid://c8cdsrc8ot1p8" path="res://assets/textures/circle_32.png" id="2_hdloj"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ew8nk"]
+direction = Vector3(0, 1, 0)
+spread = 80.0
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+gravity = Vector3(0, -5, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q7oe2"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0.882353, 0.4, 1)
+albedo_texture = ExtResource("2_hdloj")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_5sc75"]
+material = SubResource("StandardMaterial3D_q7oe2")
+size = Vector2(0.02, 0.02)
+
+[node name="BulletHitFXEnvironment" type="Node3D"]
+script = ExtResource("1_gxgwd")
+
+[node name="Decal" type="Decal" parent="."]
+size = Vector3(0.05, 0.1, 0.05)
+texture_albedo = ExtResource("2_hdloj")
+modulate = Color(0.0313726, 0.0313726, 0.0313726, 0.941176)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 4
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ew8nk")
+draw_pass_1 = SubResource("QuadMesh_5sc75")
+
+[node name="QueueFreeTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="timeout" from="QueueFreeTimer" to="." method="queue_free"]

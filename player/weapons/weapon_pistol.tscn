@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://k7a7grdet0sf"]
+
+[ext_resource type="PackedScene" uid="uid://ccu2wfr7jqq8p" path="res://player/weapons/weapon.tscn" id="1_y6tg3"]
+[ext_resource type="PackedScene" uid="uid://c7hxuyojjhole" path="res://assets/meshes/items/pistol_mesh.tscn" id="2_wl2ai"]
+
+[node name="WeaponPistol" instance=ExtResource("1_y6tg3")]
+
+[node name="Muzzle" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.243866, -0.624716)
+
+[node name="Pistol" parent="." index="1" instance=ExtResource("2_wl2ai")]
