@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7d2x6ba5t8dv"]
+
+[ext_resource type="Script" uid="uid://84qwsb04i6tu" path="res://ui/match_end_info/player_info_row_container.gd" id="1_oung4"]
+
+[node name="PlayerInfoRowContainer" type="VBoxContainer"]
+script = ExtResource("1_oung4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(725, 2)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(1, 1, 1, 0.509804)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="PlayerNameLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(512, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 22
+text = "test name"
+
+[node name="KillsAmountLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 22
+text = "3"
+horizontal_alignment = 1
+
+[node name="DeathsAmountLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 22
+text = "5"
+horizontal_alignment = 1

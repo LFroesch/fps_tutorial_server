@@ -1,0 +1,133 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj25o5j8n5gn0"]
+
+[ext_resource type="Script" uid="uid://ecqb15oc2u71" path="res://ui/match_info/match_info_ui.gd" id="1_dxt1r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vqwr"]
+bg_color = Color(0, 0.529412, 1, 0.705882)
+skew = Vector2(0.4, 0)
+expand_margin_right = 32.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dxt1r"]
+bg_color = Color(0.243137, 0.243137, 0.243137, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.2, 0.2, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cides"]
+bg_color = Color(1, 0.301961, 0, 0.705882)
+skew = Vector2(-0.4, 0)
+expand_margin_left = 32.0
+
+[node name="MatchInfoUI" type="Control" groups=["MatchInfoUI"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_dxt1r")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="TopContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="BlueTeamScorePanel" type="Panel" parent="MarginContainer/TopContainer"]
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_6vqwr")
+
+[node name="BlueTeamScoreLabel" type="Label" parent="MarginContainer/TopContainer/BlueTeamScorePanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 34
+text = "12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MatchTimeLeftPanel" type="Panel" parent="MarginContainer/TopContainer"]
+z_index = 1
+custom_minimum_size = Vector2(144, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dxt1r")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TopContainer/MatchTimeLeftPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TopContainer/MatchTimeLeftPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="MinutesLeftLabel" type="Label" parent="MarginContainer/TopContainer/MatchTimeLeftPanel/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "12"
+horizontal_alignment = 2
+
+[node name="ColonLabel" type="Label" parent="MarginContainer/TopContainer/MatchTimeLeftPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = ":"
+horizontal_alignment = 1
+
+[node name="SecondsLeftLabel" type="Label" parent="MarginContainer/TopContainer/MatchTimeLeftPanel/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "12"
+
+[node name="RedTeamScorePanel" type="Panel" parent="MarginContainer/TopContainer"]
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_cides")
+
+[node name="RedTeamScoreLabel" type="Label" parent="MarginContainer/TopContainer/RedTeamScorePanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 34
+text = "12"
+horizontal_alignment = 1
+vertical_alignment = 1

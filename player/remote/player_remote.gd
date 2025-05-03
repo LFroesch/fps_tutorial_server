@@ -17,7 +17,7 @@ const ARM_Y_ROT_SCALAR : PackedFloat32Array = [-0.39, -1.25]
 const ANIM_BLEND_TIME := 0.2
 
 var display_name : String
-@onready var name_tag_label: Label3D = $NameTagLabel
+@export var name_tag_label: Label
 
 const BLUE_MATERIAL : StandardMaterial3D = preload("res://assets/materials/blue_team_material.tres")
 const RED_MATERIAL : StandardMaterial3D = preload("res://assets/materials/red_team_material.tres")
@@ -47,7 +47,7 @@ func set_anim(anim_name : String) -> void:
 	animation_player.play(anim_name, ANIM_BLEND_TIME)
 
 func set_rot_x_visuals(rot_x : float) -> void:
-	var rot_weight := remap(rot_x, -PI/2.0, PI/2.0, 0, 1)
+	var rot_weight := remap(rot_x, -PI/2.0, PI/2.0, 0, 0.7)
 	# neck
 	var q_neck := skeleton.get_bone_pose_rotation(bone_neck)
 	q_neck.x = lerp_angle(NECK_ROT_SCALAR[0], NECK_ROT_SCALAR[1], rot_weight)

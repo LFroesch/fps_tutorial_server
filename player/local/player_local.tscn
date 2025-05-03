@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwaqdu0mey7gg"]
+[gd_scene load_steps=6 format=3 uid="uid://cwaqdu0mey7gg"]
 
 [ext_resource type="Script" uid="uid://bnmi1tvqyx4fd" path="res://player/local/player_local.gd" id="1_gucd0"]
 [ext_resource type="Script" uid="uid://dygpiuulkydqd" path="res://player/local_weapon_holder.gd" id="2_y8ftr"]
@@ -8,11 +8,22 @@
 radius = 0.25
 height = 1.6
 
-[node name="PlayerLocal" type="CharacterBody3D" node_paths=PackedStringArray("weapon_holder") groups=["PlayerLocal"]]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y8ftr"]
+resource_local_to_scene = true
+bg_color = Color(0, 0.960784, 0.294118, 0.796078)
+skew = Vector2(0.3, 0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="PlayerLocal" type="CharacterBody3D" node_paths=PackedStringArray("grenade_amount_label", "weapon_holder", "health_bar") groups=["PlayerLocal"]]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_gucd0")
+grenade_amount_label = NodePath("HUD/MarginContainer/GrenadeInfoContainer/GrenadeAmountLabel")
 weapon_holder = NodePath("Head/LocalWeaponHolder")
+health_bar = NodePath("HUD/MarginContainer/HealthBar")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
@@ -22,6 +33,7 @@ shape = SubResource("CapsuleShape3D_s7k6g")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
+current = true
 near = 0.001
 
 [node name="LocalWeaponHolder" type="Node3D" parent="Head"]
@@ -30,3 +42,8 @@ script = ExtResource("2_y8ftr")
 metadata/_custom_type_script = "uid://baehfch82gpaj"
 
 [node name="HUD" parent="." instance=ExtResource("3_w115m")]
+
+[node name="HealthBar" parent="HUD/MarginContainer" index="0"]
+theme_override_styles/fill = SubResource("StyleBoxFlat_y8ftr")
+
+[editable path="HUD"]

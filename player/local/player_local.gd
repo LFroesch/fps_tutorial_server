@@ -6,6 +6,7 @@ const AIR_ANIM := "Jump_Idle"
 const WALK_ANIM := "Walk_Shoot"
 const RUN_ANIM := "Run_Shoot"
 
+@export var grenade_amount_label : Label
 @export var normal_speed := 3.0
 @export var sprint_speed := 5.0
 @export var jump_velocity := 4.0
@@ -14,6 +15,7 @@ const RUN_ANIM := "Run_Shoot"
 
 @onready var head: Node3D = $Head
 
+var auto_freeze := false
 var is_grounded := true
 var is_sprinting := false
 var current_anim : String
@@ -21,7 +23,8 @@ var current_anim : String
 func _ready() -> void:
 	super()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	set_processes(false)
+	if auto_freeze:
+		set_processes(false)
 
 func set_processes(enabled : bool) -> void:
 	set_process(enabled)
@@ -32,6 +35,7 @@ func _physics_process(delta: float) -> void:
 	move()
 	choose_anim()
 	check_shoot_input()
+	check_throw_grenade_input()
 
 func move():
 	if is_on_floor():
@@ -72,6 +76,13 @@ func check_shoot_input() -> void:
 		weapon_holder.start_trigger_press()
 	elif Input.is_action_just_released("shoot"):
 		weapon_holder.end_trigger_press()
+
+func check_throw_grenade_input() -> void:
+	if Input.is_action_just_pressed("throw_grenade"):
+		get_tree().call_group("Lobby", "try_throw_grenade")
+
+func update_grenades_left(grenades_left : int) -> void:
+	grenade_amount_label.text = str(grenades_left)
 
 func _input(event) -> void:
 	if event is InputEventMouseMotion:

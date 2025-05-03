@@ -5,6 +5,8 @@ const INTERPOLATION_BUFFER_MS := 100
 
 var players := {}
 var world_state_buffer : Array[Dictionary] = []
+var pickups := {}
+var grenades := {}
 
 func get_local_player() -> PlayerLocal:
 	return players.get(multiplayer.get_unique_id())
@@ -55,6 +57,9 @@ func handle_world_state() -> void:
 	
 	var lerp_weight := remap(target_render_unix_ms, world_state_buffer[0].t, world_state_buffer[1].t, 0, 1)
 	
+	if world_state_buffer[0].has("gr") and world_state_buffer[1].has("gr"):
+		handle_grenades(world_state_buffer[0].gr, world_state_buffer[1].gr, lerp_weight) 
+	
 	var remote_players := get_remote_players()
 	
 	if not world_state_buffer[0].has("ps") or not world_state_buffer[1].has("ps"):
@@ -66,12 +71,44 @@ func handle_world_state() -> void:
 		if not client_id in world_state_buffer[0].ps.keys():
 			continue
 		
+		if not is_instance_valid(players.get(client_id)):
+			continue
+		
 		var remote_player : PlayerRemote = remote_players.get(client_id)
 		remote_player.update_body_geometry(
 			world_state_buffer[0].ps.get(client_id),
 			world_state_buffer[1].ps.get(client_id),
 			lerp_weight
 		)
+
+func handle_grenades(old_grenade_data : Dictionary, new_grenade_data : Dictionary, lerp_weight : float) -> void:
+	for grenade_name in new_grenade_data.keys():
+		# maybe spawning new grenades
+		if not grenade_name in grenades.keys():
+			var grenade : Grenade = preload("res://player/grenade/grenade.tscn").instantiate()
+			grenades[grenade_name] = {"inst" : grenade, "exploded" : false}
+			grenade.name = grenade_name
+			grenade.global_transform = new_grenade_data.get(grenade_name).tform
+			add_child(grenade, true)
+		
+	for grenade_name in old_grenade_data.keys():
+		# exploding the grenade if not in buffer anymore nad not exploded yet
+		if not grenade_name in new_grenade_data.keys():
+			if not grenade_name in grenades.keys():
+				continue
+				
+			if not grenades.get(grenade_name).exploded:
+				explode_grenade(grenade_name)
+				grenades.erase(grenade_name)
+				continue
+		if grenades.get(grenade_name).exploded:
+			continue
+			
+		# moving the grenades
+		var grenade : Grenade = grenades.get(grenade_name).inst
+		
+		grenade.lerp_tform(old_grenade_data.get(grenade_name), new_grenade_data.get(grenade_name), lerp_weight)
+
 
 # Make sure it arrives in right order, but can drop some packets here or there not game breaking
 @rpc("any_peer", "call_remote", "unreliable_ordered")
@@ -103,11 +140,12 @@ func s_start_match() -> void:
 	set_physics_process(true)
 
 @rpc("authority", "call_remote", "reliable")
-func s_spawn_player(client_id: int, spawn_tform : Transform3D, team : int, player_name : String, weapon_id : int):
+func s_spawn_player(client_id: int, spawn_tform : Transform3D, team : int, player_name : String, weapon_id : int, auto_freeze : bool):
 	var player : PlayerCharacter
 	
 	if client_id == multiplayer.get_unique_id():
 		player = preload("res://player/local/player_local.tscn").instantiate()
+		player.auto_freeze = auto_freeze
 		
 	else:
 		player = preload("res://player/remote/player_remote.tscn").instantiate()
@@ -171,3 +209,67 @@ func s_update_health(target_client_id : int, current_health : int, max_health : 
 	var maybe_player : PlayerCharacter = players.get(target_client_id)
 	if is_instance_valid(maybe_player):
 		maybe_player.update_health_bar(current_health, max_health, changed_amount)
+
+@rpc("authority", "call_remote", "reliable")
+func s_spawn_pickup(pickup_name : String, pickup_type : int, pos : Vector3) -> void:
+	var pickup : Pickup = preload("res://player/pickups/pickup.tscn").instantiate()
+	pickup.name = pickup_name
+	pickup.position = pos
+	add_child(pickup, true)
+	pickups[pickup.name] = pickup
+
+@rpc("authority", "call_remote", "reliable")
+func s_pickup_cooldown_started(pickup_name : String) -> void:
+	pickups.get(pickup_name).cooldown_started()
+	
+@rpc("authority", "call_remote", "reliable")
+func s_pickup_cooldown_ended(pickup_name : String) -> void:
+	pickups.get(pickup_name).cooldown_ended()
+
+@rpc("authority", "call_remote", "reliable")
+func s_player_died(dead_player_id : int) -> void:
+	if players.has(dead_player_id):
+		players.get(dead_player_id).queue_free()
+		players[dead_player_id] = null
+
+@rpc("authority", "call_remote", "reliable")
+func s_update_game_scores(blue_score : int, red_score : int) -> void:
+	get_tree().call_group("MatchInfoUI", "update_score", blue_score, red_score)
+
+@rpc("authority", "call_remote", "unreliable_ordered")
+func s_update_match_time_left(time_left : int) -> void:
+	get_tree().call_group("MatchInfoUI", "update_match_time_left", time_left)
+
+@rpc("authority", "call_remote", "reliable")
+func s_end_match(end_client_data : Dictionary) -> void:
+	get_tree().call_group("LocalGameSceneManager", "change_scene", "res://ui/match_end_info/match_end_info_ui.tscn", end_client_data)
+	queue_free()
+
+func try_throw_grenade() -> void:
+	c_try_throw_grenade.rpc_id(1, create_player_data())
+	
+@rpc("any_peer", "call_remote", "reliable")
+func c_try_throw_grenade(player_state : Dictionary) -> void:
+	pass
+
+@rpc("authority", "call_remote", "unreliable_ordered")
+func s_update_grenades_left(grenades_left : int) -> void:
+	get_local_player().update_grenades_left(grenades_left)
+
+@rpc("authority", "call_remote", "reliable")
+func s_explode_grenade(grenade_name : String) -> void:
+	pass
+
+func explode_grenade(grenade_name : String) -> void:
+	if not grenade_name in grenades.keys():
+		return
+		
+	var grenade : Grenade = grenades.get(grenade_name).inst
+	
+	if is_instance_valid(grenade):
+		var explosion_fx : Node3D = preload("res://player/grenade/grenade_explosion_fx.tscn").instantiate()
+		explosion_fx.global_transform = grenade.global_transform
+		add_child(explosion_fx)
+		grenade.queue_free()
+		
+	grenades[grenade_name].exploded = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://dq5t1vtng3c8c"]
+[gd_scene load_steps=40 format=4 uid="uid://dq5t1vtng3c8c"]
 
 [ext_resource type="Script" uid="uid://cicgtwlt7j1ge" path="res://player/remote/player_remote.gd" id="1_55a7p"]
 [ext_resource type="Script" uid="uid://baehfch82gpaj" path="res://player/weapons/weapon_holder.gd" id="2_2kk07"]
@@ -4919,11 +4919,22 @@ _data = {
 [sub_resource type="ViewportTexture" id="ViewportTexture_8v6k4"]
 viewport_path = NodePath("SubViewport")
 
-[node name="PlayerRemote" type="CharacterBody3D" node_paths=PackedStringArray("weapon_holder")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ch8kf"]
+resource_local_to_scene = true
+bg_color = Color(0, 0.960784, 0.294118, 0.796078)
+skew = Vector2(0.3, 0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="PlayerRemote" type="CharacterBody3D" node_paths=PackedStringArray("name_tag_label", "weapon_holder", "health_bar")]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_55a7p")
+name_tag_label = NodePath("SubViewport/PlayerInfo/VBoxContainer/PlayerNameLabel")
 weapon_holder = NodePath("character_soldier/CharacterArmature/Skeleton3D/WeaponHolderBone/WeaponHolder")
+health_bar = NodePath("SubViewport/PlayerInfo/VBoxContainer/HealthBar")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
@@ -5358,7 +5369,7 @@ bones/59/rotation = Quaternion(-3.55273e-15, -5.96046e-07, 3.38813e-21, 1)
 bones/59/scale = Vector3(1, 1, 1)
 
 [node name="Head_2" type="BoneAttachment3D" parent="character_soldier/CharacterArmature/Skeleton3D"]
-transform = Transform3D(0.586174, 1.54812e-08, -1.40863e-08, -1.52413e-08, 0.58609, 0.00991701, 1.43191e-08, -0.00991701, 0.58609, -3.17232e-08, -0.115201, 0.143613)
+transform = Transform3D(0.586174, 1.54812e-08, -1.41154e-08, -1.52463e-08, 0.58609, 0.00991702, 1.43482e-08, -0.00991702, 0.58609, -3.17232e-08, -0.115201, 0.143613)
 bone_name = "Head_2"
 bone_idx = 8
 
@@ -5368,7 +5379,7 @@ mesh = SubResource("ArrayMesh_6qh0i")
 skeleton = NodePath("")
 
 [node name="ShoulderPad_L" type="BoneAttachment3D" parent="character_soldier/CharacterArmature/Skeleton3D"]
-transform = Transform3D(0.387066, 0.439086, 0.0313509, -0.433709, 0.387532, -0.0729001, -0.075334, 0.0249414, 0.580778, 0.368279, 1.18833, 0.0242413)
+transform = Transform3D(0.387066, 0.439086, 0.0313509, -0.433709, 0.387532, -0.0729001, -0.0753341, 0.0249414, 0.580778, 0.368279, 1.18833, 0.0242412)
 bone_name = "ShoulderPad.L"
 bone_idx = 23
 
@@ -5377,7 +5388,7 @@ mesh = SubResource("ArrayMesh_lkk3s")
 skeleton = NodePath("")
 
 [node name="ShoulderPad_R" type="BoneAttachment3D" parent="character_soldier/CharacterArmature/Skeleton3D"]
-transform = Transform3D(0.202571, -0.222828, 0.502904, 0.117178, 0.541103, 0.192553, -0.537432, 0.0339894, 0.231539, -0.288181, 1.31998, 0.271437)
+transform = Transform3D(0.20257, -0.222828, 0.502905, 0.117178, 0.541103, 0.192553, -0.537432, 0.0339893, 0.231539, -0.288181, 1.31998, 0.271437)
 bone_name = "ShoulderPad.R"
 bone_idx = 52
 
@@ -5391,7 +5402,7 @@ mesh = SubResource("ArrayMesh_xbvh6")
 skin = SubResource("Skin_3n437")
 
 [node name="WeaponHolderBone" type="BoneAttachment3D" parent="character_soldier/CharacterArmature/Skeleton3D"]
-transform = Transform3D(0.156135, -0.955408, 0.250633, -0.430758, 0.162481, 0.88772, -0.888858, -0.246566, -0.386181, -0.343377, 1.34911, 1.02346)
+transform = Transform3D(0.156134, -0.955409, 0.250632, -0.430758, 0.16248, 0.887721, -0.888858, -0.246566, -0.386181, -0.343376, 1.34911, 1.02346)
 bone_name = "Shotgun"
 bone_idx = 45
 
@@ -5408,6 +5419,7 @@ libraries = {
 autoplay = "Idle"
 
 [node name="PlayerInfo3DSprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
 pixel_size = 0.005
 billboard = 1
 texture = SubResource("ViewportTexture_8v6k4")
@@ -5417,3 +5429,8 @@ transparent_bg = true
 size = Vector2i(1024, 1024)
 
 [node name="PlayerInfo" parent="SubViewport" instance=ExtResource("3_2kk07")]
+
+[node name="HealthBar" parent="SubViewport/PlayerInfo/VBoxContainer" index="1"]
+theme_override_styles/fill = SubResource("StyleBoxFlat_ch8kf")
+
+[editable path="SubViewport/PlayerInfo"]

@@ -1,4 +1,16 @@
-[gd_scene format=3 uid="uid://qty0uvl51pci"]
+[gd_scene load_steps=4 format=3 uid="uid://qty0uvl51pci"]
+
+[ext_resource type="PackedScene" uid="uid://djupja6ectlps" path="res://player/player_info/health_bar.tscn" id="1_xmswo"]
+[ext_resource type="Texture2D" uid="uid://cr3t77cm3qiui" path="res://assets/textures/grenade_icon.png" id="2_4d6w6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e0nub"]
+resource_local_to_scene = true
+bg_color = Color(0, 0.960784, 0.294118, 0.796078)
+skew = Vector2(0.3, 0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -25,3 +37,40 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="HealthBar" parent="MarginContainer" instance=ExtResource("1_xmswo")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/fill = SubResource("StyleBoxFlat_e0nub")
+
+[node name="GrenadeInfoContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="GrenadeAmountLabel" type="Label" parent="MarginContainer/GrenadeInfoContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 32
+text = "2"
+
+[node name="GrenadeIconTextureRect" type="TextureRect" parent="MarginContainer/GrenadeInfoContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("2_4d6w6")
+expand_mode = 1
+stretch_mode = 5

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2uqgkhi4q0kr"]
+
+[ext_resource type="Script" uid="uid://gny5x487cwnp" path="res://player/grenade/grenade.gd" id="1_pn3ch"]
+[ext_resource type="PackedScene" uid="uid://ds87wmlikaw7c" path="res://assets/meshes/items/grenade.tscn" id="2_whkus"]
+
+[node name="Grenade" type="Node3D"]
+script = ExtResource("1_pn3ch")
+
+[node name="Grenade" parent="." instance=ExtResource("2_whkus")]

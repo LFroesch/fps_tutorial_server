@@ -1,0 +1,161 @@
+[gd_scene load_steps=5 format=3 uid="uid://dk57er5fqigsn"]
+
+[ext_resource type="Texture2D" uid="uid://byukgpq4ekqs4" path="res://assets/textures/bg_black_and_white.png" id="1_algbl"]
+[ext_resource type="Script" uid="uid://cf3s27rmyls86" path="res://ui/match_end_info/match_end_info_ui.gd" id="1_scw5f"]
+[ext_resource type="Texture2D" uid="uid://c11uhyootlqhk" path="res://assets/textures/kills_icon.png" id="2_p5bbx"]
+[ext_resource type="Texture2D" uid="uid://dkc2w6xm210fc" path="res://assets/textures/deaths_icon.png" id="3_scw5f"]
+
+[node name="MatchEndInfoUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_scw5f")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.494118, 0.494118, 0.494118, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_algbl")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="BlueTeamInfoContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+modulate = Color(0, 0.529412, 1, 1)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BlueTeamInfoContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/BlueTeamInfoContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "BLUE TEAM"
+horizontal_alignment = 1
+
+[node name="BlueTeamScoreLabel" type="Label" parent="MarginContainer/VBoxContainer/BlueTeamInfoContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "15"
+horizontal_alignment = 1
+
+[node name="BlueTeamPlayerInfoContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BlueTeamInfoContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BlueTeamInfoContainer/BlueTeamPlayerInfoContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/BlueTeamInfoContainer/BlueTeamPlayerInfoContainer/HBoxContainer"]
+custom_minimum_size = Vector2(512, 0)
+layout_mode = 2
+
+[node name="KillsIconTextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/BlueTeamInfoContainer/BlueTeamPlayerInfoContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+texture = ExtResource("2_p5bbx")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DeathsIconTextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/BlueTeamInfoContainer/BlueTeamPlayerInfoContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+texture = ExtResource("3_scw5f")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/BlueTeamInfoContainer/BlueTeamPlayerInfoContainer"]
+layout_mode = 2
+
+[node name="RedTeamInfoContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+modulate = Color(1, 0.301961, 0, 1)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/RedTeamInfoContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/RedTeamInfoContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "RED TEAM"
+horizontal_alignment = 1
+
+[node name="RedTeamScoreLabel" type="Label" parent="MarginContainer/VBoxContainer/RedTeamInfoContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "15"
+horizontal_alignment = 1
+
+[node name="RedTeamPlayerInfoContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/RedTeamInfoContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/RedTeamInfoContainer/RedTeamPlayerInfoContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/RedTeamInfoContainer/RedTeamPlayerInfoContainer/HBoxContainer"]
+custom_minimum_size = Vector2(512, 0)
+layout_mode = 2
+
+[node name="KillsIconTextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/RedTeamInfoContainer/RedTeamPlayerInfoContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+texture = ExtResource("2_p5bbx")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DeathsIconTextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/RedTeamInfoContainer/RedTeamPlayerInfoContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+texture = ExtResource("3_scw5f")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/RedTeamInfoContainer/RedTeamPlayerInfoContainer"]
+layout_mode = 2
+
+[node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(192, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Return to Menu"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

@@ -5023,7 +5023,6 @@ bone_idx = 25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.159659, -2.79397e-09)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="character_soldier/CharacterArmature/Skeleton3D/BoneAttachmentUpperArmR/Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_fmy6v")
 
 [node name="BoneAttachmentUpperLegR" type="BoneAttachment3D" parent="character_soldier/CharacterArmature/Skeleton3D"]
@@ -5035,7 +5034,6 @@ bone_idx = 55
 transform = Transform3D(1, 0, 0, 0, 0.978195, -0.20769, 0, 0.20769, 0.978195, 0, 0.153089, 0.00809132)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="character_soldier/CharacterArmature/Skeleton3D/BoneAttachmentUpperLegR/Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_d2hwr")
 
 [node name="BoneAttachmentLowerLegR" type="BoneAttachment3D" parent="character_soldier/CharacterArmature/Skeleton3D"]
@@ -5071,7 +5069,6 @@ bone_idx = 26
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.98492e-10, 0.26336, -2.79397e-09)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="character_soldier/CharacterArmature/Skeleton3D/BoneAttachmentLowerArmR/Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_fg8v3")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="character_soldier/CharacterArmature/Skeleton3D/BoneAttachmentLowerArmR/Hitbox"]
@@ -5087,7 +5084,6 @@ bone_idx = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.159659, -2.79397e-09)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="character_soldier/CharacterArmature/Skeleton3D/BoneAttachmentUpperArmL/Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_fmy6v")
 
 [node name="BoneAttachmentUpperLegL" type="BoneAttachment3D" parent="character_soldier/CharacterArmature/Skeleton3D"]
@@ -5099,7 +5095,6 @@ bone_idx = 53
 transform = Transform3D(1, 0, 0, 0, 0.978195, -0.20769, 0, 0.20769, 0.978195, 0, 0.153089, 0.00809132)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="character_soldier/CharacterArmature/Skeleton3D/BoneAttachmentUpperLegL/Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_d2hwr")
 
 [node name="BoneAttachmentLowerLegL" type="BoneAttachment3D" parent="character_soldier/CharacterArmature/Skeleton3D"]
@@ -5135,7 +5130,6 @@ bone_idx = 11
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.98492e-10, 0.26336, -2.79397e-09)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="character_soldier/CharacterArmature/Skeleton3D/BoneAttachmentLowerArmL/Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_fg8v3")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="character_soldier/CharacterArmature/Skeleton3D/BoneAttachmentLowerArmL/Hitbox"]
