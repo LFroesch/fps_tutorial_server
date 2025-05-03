@@ -14,3 +14,6 @@ func instantiate_weapon() -> void:
 		print("no weapon holder found on ", self)
 		
 	weapon_holder.instantiate_weapon(weapon_id)
+
+func update_health_bar(current_health : int, max_health : int, changed_amount: int) -> void:
+	pass
