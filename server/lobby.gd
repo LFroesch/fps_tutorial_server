@@ -215,6 +215,7 @@ func s_spawn_pickup(pickup_name : String, pickup_type : int, pos : Vector3) -> v
 	var pickup : Pickup = preload("res://player/pickups/pickup.tscn").instantiate()
 	pickup.name = pickup_name
 	pickup.position = pos
+	pickup.pickup_type = pickup_type
 	add_child(pickup, true)
 	pickups[pickup.name] = pickup
 

@@ -19,6 +19,7 @@ var auto_freeze := false
 var is_grounded := true
 var is_sprinting := false
 var current_anim : String
+var nearby_grenades : Array[Grenade] = []
 
 func _ready() -> void:
 	super()
@@ -36,6 +37,7 @@ func _physics_process(delta: float) -> void:
 	choose_anim()
 	check_shoot_input()
 	check_throw_grenade_input()
+	show_nearby_grenades()
 
 func move():
 	if is_on_floor():
@@ -81,6 +83,17 @@ func check_throw_grenade_input() -> void:
 	if Input.is_action_just_pressed("throw_grenade"):
 		get_tree().call_group("Lobby", "try_throw_grenade")
 
+func show_nearby_grenades() -> void:
+	var grenades_data := {}
+	var own_pos := Vector2(global_position.x, global_position.z)
+	
+	for grenade in nearby_grenades:
+		var grenade_pos := Vector2(grenade.global_position.x, grenade.global_position.z)
+		grenades_data[grenade.name] = own_pos.angle_to_point(grenade_pos) + PI / 2 + rotation.y
+		
+	get_tree().call_group("GrenadePromptsControl", "update_grenade_prompts", grenades_data)
+	
+
 func update_grenades_left(grenades_left : int) -> void:
 	grenade_amount_label.text = str(grenades_left)
 
@@ -97,3 +110,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
 		#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+func _on_grenade_detection_area_3d_area_entered(area: Area3D) -> void:
+	nearby_grenades.append(area.get_parent())
+
+func _on_grenade_detection_area_3d_area_exited(area: Area3D) -> void:
+	nearby_grenades.erase(area.get_parent())

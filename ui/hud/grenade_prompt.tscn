@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://di1vjjm2mmmyk"]
+
+[ext_resource type="Texture2D" uid="uid://cr3t77cm3qiui" path="res://assets/textures/grenade_icon.png" id="1_im7eo"]
+[ext_resource type="Script" uid="uid://bps2qfjbtfdv0" path="res://ui/hud/grenade_prompt.gd" id="1_mekxm"]
+
+[node name="GrenadePrompt" type="Control"]
+custom_minimum_size = Vector2(384, 384)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -192.0
+offset_right = 192.0
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(192, 192)
+script = ExtResource("1_mekxm")
+
+[node name="GrenadeIconTextureRect" type="TextureRect" parent="."]
+modulate = Color(1, 0, 0, 1)
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.0
+offset_right = 16.0
+offset_bottom = 32.0
+grow_horizontal = 2
+pivot_offset = Vector2(16, 16)
+texture = ExtResource("1_im7eo")
+expand_mode = 1
+stretch_mode = 5
